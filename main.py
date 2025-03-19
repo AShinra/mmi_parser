@@ -2,10 +2,12 @@ import os
 import streamlit as st
 from playwright.sync_api import sync_playwright
 
-# Install missing Playwright dependencies on Streamlit Cloud
-if not os.path.exists("/root/.cache/ms-playwright"):
+# Install Playwright browsers in user-writable directory
+PLAYWRIGHT_PATH = os.path.expanduser("~/.cache/ms-playwright")
+
+if not os.path.exists(PLAYWRIGHT_PATH):
     st.warning("Installing Playwright Chromium & dependencies... Please wait.")
-    os.system("playwright install --with-deps chromium")
+    os.system("playwright install chromium --with-deps")
     st.success("Chromium installed successfully!")
 
 def get_page_source(url):
