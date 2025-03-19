@@ -1,6 +1,14 @@
 import streamlit as st
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
+import os
+
+# Install Playwright browsers if not already installed
+if not os.path.exists("/root/.cache/ms-playwright"):
+    st.warning("Installing Playwright browsers (one-time setup)...")
+    os.system("playwright install chromium")
+
+st.success("Playwright is ready!")
 
 def get_page_source(url):
     with sync_playwright() as p:
