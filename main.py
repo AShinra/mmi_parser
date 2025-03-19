@@ -1,14 +1,12 @@
+import os
 import streamlit as st
 from playwright.sync_api import sync_playwright
-from bs4 import BeautifulSoup
-import os
 
-# Install Playwright browsers if not already installed
+# Install missing Playwright dependencies on Streamlit Cloud
 if not os.path.exists("/root/.cache/ms-playwright"):
-    st.warning("Installing Playwright browsers (one-time setup)...")
-    os.system("playwright install chromium")
-
-st.success("Playwright is ready!")
+    st.warning("Installing Playwright Chromium & dependencies... Please wait.")
+    os.system("playwright install --with-deps chromium")
+    st.success("Chromium installed successfully!")
 
 def get_page_source(url):
     with sync_playwright() as p:
@@ -22,8 +20,7 @@ def get_page_source(url):
         html = page.content()  # Get page source after JavaScript execution
         browser.close()
 
-    soup = BeautifulSoup(html, "html.parser")
-    return soup.prettify()[:2000]  # Return first 2000 chars
+    return html[:2000]  # Return first 2000 chars
 
 def main_scraper():
     st.title("Cloudflare Bypass Scraper (Playwright)")
