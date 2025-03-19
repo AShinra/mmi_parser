@@ -3,9 +3,8 @@ import streamlit as st
 from playwright.sync_api import sync_playwright
 import random
 
-# Ensure Playwright and its browsers are installed
-os.system("pip install playwright")
-os.system("playwright install --with-deps chromium")
+# Install Playwright browsers in user space (NO SUDO)
+os.system("playwright install chromium")
 
 # List of random user-agents to bypass detection
 USER_AGENTS = [
