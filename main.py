@@ -2,7 +2,6 @@ import os
 import streamlit as st
 from playwright.sync_api import sync_playwright
 import random
-import time
 
 # Ensure Playwright browsers are installed
 os.system("playwright install chromium")
@@ -23,8 +22,6 @@ def get_links(url):
             context = browser.new_context(user_agent=random.choice(USER_AGENTS))
             page = context.new_page()
             page.goto(url, timeout=60000)
-            
-            time.sleep(20)
 
             # Extract all anchor (<a>) tag links
             links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
