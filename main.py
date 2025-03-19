@@ -3,8 +3,17 @@ import cloudscraper
 from bs4 import BeautifulSoup
 
 def get_page_source(url):
-    scraper = cloudscraper.create_scraper()  # Bypasses Cloudflare
-    response = scraper.get(url)
+    scraper = cloudscraper.create_scraper(
+        browser={"browser": "chrome", "platform": "windows", "mobile": False}
+    )
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": url,  # Some sites require a referer
+    }
+
+    response = scraper.get(url, headers=headers)
 
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, "html.parser")
@@ -13,7 +22,7 @@ def get_page_source(url):
         return f"Error: Received status code {response.status_code}"
 
 def main_scraper():
-    st.title("Cloudflare Bypass Scraper with Streamlit")
+    st.title("Cloudflare Bypass Scraper")
     url = st.text_input("Enter a URL to scrape:")
 
     if st.button("Scrape"):
