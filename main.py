@@ -1,41 +1,28 @@
 import os
 import streamlit as st
 from playwright.sync_api import sync_playwright
-from playwright_stealth import stealth  # Hide bot detection
+from playwright_stealth import stealth
 
 # Ensure Playwright browsers are installed (without sudo)
-PLAYWRIGHT_DIR = os.path.expanduser("~/.cache/ms-playwright")
-
-if not os.path.exists(PLAYWRIGHT_DIR):
+if not os.path.exists(os.path.expanduser("~/.cache/ms-playwright")):
     st.warning("Installing Playwright Chromium... This may take a minute.")
     os.system("playwright install chromium --with-deps")
     st.success("Chromium installed successfully!")
 
 def get_links(url):
-    """Extracts all links from a webpage while bypassing Cloudflare."""
+    """Extract links from a webpage using Playwright."""
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)  # Run non-headless to bypass detection
+        browser = p.chromium.launch(headless=False)  # Run non-headless to bypass Cloudflare
         context = browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            viewport={"width": 1280, "height": 720},  # Standard screen size
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         )
-        
+
         page = context.new_page()
-        stealth(page)  # Apply stealth mode to bypass detection
+        stealth(page)  # Hide automation signals
+        page.goto(url, timeout=90000, wait_until="domcontentloaded")
 
-        try:
-            page.goto(url, timeout=90000, wait_until="domcontentloaded")  # Wait for JS to execute
-            
-            # Simulate human-like scrolling
-            page.mouse.wheel(0, 500)
-            page.wait_for_timeout(2000)  # Wait for Cloudflare to process
-
-            # Extract all anchor (`<a>`) tag links
-            links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
-
-        except Exception as e:
-            st.error(f"Error: {e}")
-            links = []
+        # Extract all links
+        links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
 
         browser.close()
     return links
@@ -51,9 +38,9 @@ def main_scraper():
                     links = get_links(url)
                     if links:
                         st.success(f"Found {len(links)} links!")
-                        st.write("\n".join(links))  # Display all links
+                        st.write("\n".join(links))
                     else:
-                        st.warning("No links found on the page.")
+                        st.warning("No links found.")
                 except Exception as e:
                     st.error(f"Error: {e}")
         else:
