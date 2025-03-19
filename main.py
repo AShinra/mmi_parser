@@ -21,7 +21,7 @@ def get_links(url):
         page = context.new_page()
         page.goto(url, timeout=60000)
 
-        time.sleep(10)  
+        time.sleep(30)  
 
         # Extract all anchor (`<a>`) tag links
         links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
