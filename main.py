@@ -2,17 +2,15 @@ import os
 import streamlit as st
 from playwright.sync_api import sync_playwright
 
-# Install Playwright browsers in user-writable directory
-PLAYWRIGHT_PATH = os.path.expanduser("~/.cache/ms-playwright")
-
-if not os.path.exists(PLAYWRIGHT_PATH):
-    st.warning("Installing Playwright Chromium & dependencies... Please wait.")
+# Ensure Playwright's browsers are installed
+if not os.path.exists("/root/.cache/ms-playwright"):
+    st.warning("Installing Playwright Chromium... This may take a minute.")
     os.system("playwright install chromium --with-deps")
     st.success("Chromium installed successfully!")
 
 def get_page_source(url):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)  # Headless mode
+        browser = p.chromium.launch(headless=True)  # Launch in headless mode
         context = browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         )
