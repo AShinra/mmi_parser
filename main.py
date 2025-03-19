@@ -2,18 +2,30 @@ import os
 import streamlit as st
 from playwright.sync_api import sync_playwright
 
-# Ensure Playwright browsers are installed
-PLAYWRIGHT_DIR = os.path.expanduser("~/.cache/ms-playwright")
-
-if not os.path.exists(PLAYWRIGHT_DIR):
+# Ensure Playwright installs Chromium correctly
+def install_playwright():
     st.warning("Installing Playwright Chromium... This may take a minute.")
     os.system("playwright install chromium --with-deps")
     st.success("Chromium installed successfully!")
 
+# Check if Chromium is installed, install if necessary
+PLAYWRIGHT_DIR = os.path.expanduser("~/.cache/ms-playwright")
+if not os.path.exists(PLAYWRIGHT_DIR):
+    install_playwright()
+
 def get_links(url):
     """Extracts all links from a given URL using Playwright."""
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)  
+        try:
+            browser = p.chromium.launch(
+                headless=True, 
+                executable_path="/home/appuser/.cache/ms-playwright/chromium-1161/chrome-linux/chrome"  # Force path
+            )
+        except:
+            st.error("Chromium is missing. Reinstalling Playwright...")
+            install_playwright()
+            browser = p.chromium.launch(headless=True)
+
         context = browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         )
