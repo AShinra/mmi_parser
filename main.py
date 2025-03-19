@@ -1,41 +1,32 @@
 import os
-import random
 import streamlit as st
 from playwright.sync_api import sync_playwright
+import random
 
-userAgents = [
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0',
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
-        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36	'
-    ]
+# Ensure Playwright and its browsers are installed
+os.system("pip install playwright")
+os.system("playwright install --with-deps chromium")
 
-# Ensure Playwright browsers are installed
-PLAYWRIGHT_DIR = os.path.expanduser("~/.cache/ms-playwright")
-
-if not os.path.exists(PLAYWRIGHT_DIR):
-    st.warning("Installing Playwright Chromium... This may take a minute.")
-    os.system("playwright install chromium --with-deps")
-    st.success("Chromium installed successfully!")
+# List of random user-agents to bypass detection
+USER_AGENTS = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+]
 
 def get_links(url):
     """Extracts all links from a given URL using Playwright."""
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)  
-        context = browser.new_context(
-            user_agent=random.choice(userAgents)
-        )
+        context = browser.new_context(user_agent=random.choice(USER_AGENTS))
         page = context.new_page()
-        page.goto(url, timeout=60000)  
+        page.goto(url, timeout=60000)
 
         # Extract all anchor (`<a>`) tag links
         links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
 
         browser.close()
-
     return links
 
 def main_scraper():
