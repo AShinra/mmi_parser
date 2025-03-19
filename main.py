@@ -1,28 +1,24 @@
 import streamlit as st
-import cloudscraper
+from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 
 def get_page_source(url):
-    scraper = cloudscraper.create_scraper(
-        browser={"browser": "chrome", "platform": "windows", "mobile": False}
-    )
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)  # Headless mode
+        context = browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        )
+        page = context.new_page()
+        page.goto(url, timeout=60000)  # Load the page
 
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Referer": url,  # Some sites require a referer
-    }
+        html = page.content()  # Get page source after JavaScript execution
+        browser.close()
 
-    response = scraper.get(url, headers=headers)
-
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, "html.parser")
-        return soup.prettify()[:2000]  # Return first 2000 chars
-    else:
-        return f"Error: Received status code {response.status_code}"
+    soup = BeautifulSoup(html, "html.parser")
+    return soup.prettify()[:2000]  # Return first 2000 chars
 
 def main_scraper():
-    st.title("Cloudflare Bypass Scraper")
+    st.title("Cloudflare Bypass Scraper (Playwright)")
     url = st.text_input("Enter a URL to scrape:")
 
     if st.button("Scrape"):
