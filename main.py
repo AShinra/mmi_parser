@@ -3,7 +3,7 @@ import streamlit as st
 from playwright.sync_api import sync_playwright
 import random
 
-# Install Playwright browsers in user space (NO SUDO)
+# Ensure Playwright browsers are installed
 os.system("playwright install chromium")
 
 # List of random user-agents to bypass detection
@@ -16,17 +16,20 @@ USER_AGENTS = [
 
 def get_links(url):
     """Extracts all links from a given URL using Playwright."""
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)  
-        context = browser.new_context(user_agent=random.choice(USER_AGENTS))
-        page = context.new_page()
-        page.goto(url, timeout=60000)
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            context = browser.new_context(user_agent=random.choice(USER_AGENTS))
+            page = context.new_page()
+            page.goto(url, timeout=60000)
 
-        # Extract all anchor (`<a>`) tag links
-        links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
+            # Extract all anchor (<a>) tag links
+            links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
 
-        browser.close()
-    return links
+            browser.close()
+        return links
+    except Exception as e:
+        return [f"Error: {e}"]
 
 def main_scraper():
     st.title("Extract Links from a Webpage (Playwright)")
@@ -37,11 +40,11 @@ def main_scraper():
             with st.spinner("Extracting links..."):
                 try:
                     links = get_links(url)
-                    if links:
+                    if links and "Error" not in links[0]:
                         st.success(f"Found {len(links)} links!")
                         st.write("\n".join(links))  # Display all links
                     else:
-                        st.warning("No links found on the page.")
+                        st.warning("No links found on the page or an error occurred.")
                 except Exception as e:
                     st.error(f"Error: {e}")
         else:
