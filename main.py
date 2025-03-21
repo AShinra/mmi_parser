@@ -23,6 +23,9 @@ def get_links(url):
             page = context.new_page()
             page.goto(url, timeout=60000)
 
+            # Wait until the page is fully loaded
+            page.wait_for_selector("body", state="visible", timeout=10000)
+
             # Remove ads before extracting content
             ad_selectors = [
                 "iframe",  # Commonly used for ads
