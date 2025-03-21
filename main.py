@@ -31,6 +31,9 @@ def get_links(url):
             ]
             for selector in ad_selectors:
                 page.eval_on_selector_all(selector, "elements => elements.forEach(e => e.remove())")
+
+            # Extract cleaned page content
+            st.write(page.content())
             
             # Extract all anchor (<a>) tag links
             links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
