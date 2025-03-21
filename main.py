@@ -23,6 +23,8 @@ def get_links(url):
             page = context.new_page()
             page.goto(url, timeout=60000)
 
+            st.write(page.content())
+
             # Wait until the page is fully loaded
             page.wait_for_selector("article", state="visible", timeout=10000)
 
