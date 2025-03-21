@@ -15,7 +15,7 @@ USER_AGENTS = [
 ]
 
 def get_links(url):
-    """Extracts all links from a given URL using Playwright."""
+    """Extracts all links from a given URL using Playwright after removing ads."""
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
@@ -23,7 +23,15 @@ def get_links(url):
             page = context.new_page()
             page.goto(url, timeout=60000)
 
-            st.write(page.content())
+            # Remove ads before extracting content
+            ad_selectors = [
+                "iframe",  # Commonly used for ads
+                "[id*='ads']", "[class*='ads']", "[data-ad]",  # Various ad-related elements
+                "[aria-label='advertisement']"
+            ]
+            for selector in ad_selectors:
+                page.eval_on_selector_all(selector, "elements => elements.forEach(e => e.remove())")
+            
             # Extract all anchor (<a>) tag links
             links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
 
