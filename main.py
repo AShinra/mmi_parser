@@ -34,6 +34,7 @@ def get_links(url):
             
             # Extract all anchor (<a>) tag links
             links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
+            links = list(dict.fromkeys(links))
 
             browser.close()
         return links
