@@ -51,7 +51,9 @@ def main_scraper():
                     links = get_links(url)
                     if links and "Error" not in links[0]:
                         st.success(f"Found {len(links)} links!")
-                        st.write("\n".join(links))  # Display all links
+                        # st.write("\n".join(links))  # Display all links
+                        for link in links:
+                            st.write(link)
                     else:
                         st.warning("No links found on the page or an error occurred.")
                 except Exception as e:
