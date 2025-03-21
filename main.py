@@ -19,14 +19,16 @@ def get_links(url):
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
-            context = browser.new_context(user_agent=random.choice(USER_AGENTS))
+            context = browser.new_context(
+                user_agent=random.choice(USER_AGENTS),
+                java_script_enabled=True,
+                storage_state="default"
+            )
             page = context.new_page()
             page.goto(url, timeout=60000)
-
-            st.write(page.content())
-
+            
             # Wait until the page is fully loaded
-            page.wait_for_selector("article", state="visible", timeout=10000)
+            page.wait_for_selector("body", state="visible", timeout=10000)
 
             # Remove ads before extracting content
             ad_selectors = [
@@ -35,11 +37,18 @@ def get_links(url):
                 "[aria-label='advertisement']"
             ]
             for selector in ad_selectors:
-                page.eval_on_selector_all(selector, "elements => elements.forEach(e => e.remove())")
+                try:
+                    page.wait_for_selector(selector, state="visible", timeout=5000)
+                    page.eval_on_selector_all(selector, "elements => elements.forEach(e => e.remove())")
+                except:
+                    pass  # Ignore errors if the element is not found or not visible
+
+            # Extract cleaned page content
+            st.write(page.content())
             
             # Extract all anchor (<a>) tag links
+            page.wait_for_selector("a", state="visible", timeout=5000)
             links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
-            links = list(dict.fromkeys(links))
 
             browser.close()
         return links
@@ -57,9 +66,7 @@ def main_scraper():
                     links = get_links(url)
                     if links and "Error" not in links[0]:
                         st.success(f"Found {len(links)} links!")
-                        # st.write("\n".join(links))  # Display all links
-                        for link in links:
-                            st.write(link)
+                        st.write("\n".join(links))  # Display all links
                     else:
                         st.warning("No links found on the page or an error occurred.")
                 except Exception as e:
