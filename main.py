@@ -26,7 +26,7 @@ def main():
         if url:
             with st.spinner('Running App'):
                 page_content = get_page_content(url)
-                with st.expander():
+                with st.expander('Test'):
                     st.write(page_content)
 
 if __name__ == '__main__':
