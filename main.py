@@ -13,6 +13,9 @@ def get_page_content(url):
     page = browser.new_page()
     page.goto(url)
 
+    x = page.screenshot(path='sample.png')
+    st.image(x)
+
     return page.content()
 
 def main():
