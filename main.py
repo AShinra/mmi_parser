@@ -1,7 +1,7 @@
 from playwright.sync_api import sync_playwright
 import streamlit as st
 
-def test(url):
+def get_page_content(url):
     pw = sync_playwright().start()
 
     browser = pw.chromium.launch()
@@ -12,8 +12,9 @@ def test(url):
     return page.content()
 
 
-url = st.text_input('Enter URL')
+if __name__ == '__main__':
+    url = st.text_input('Enter URL')
 
-if url:
-    x = test(url)
-    st.write(x)
+    if url:
+        page_content = get_page_content(url)
+    
