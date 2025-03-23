@@ -23,6 +23,7 @@ if button_process:
     if url:
         with st.spinner('Running App'):
             page_content = get_page_content(url)
+            st.write(page_content)
 
 
 
