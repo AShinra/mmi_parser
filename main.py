@@ -1,5 +1,9 @@
+import os
 from playwright.sync_api import sync_playwright
 import streamlit as st
+
+# Ensure Playwright browsers are installed
+os.system("playwright install chromium")
 
 def get_page_content(url):
     pw = sync_playwright().start()
