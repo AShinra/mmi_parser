@@ -16,5 +16,6 @@ if __name__ == '__main__':
     url = st.text_input('Enter URL')
 
     if url:
-        page_content = get_page_content(url)
+        with st.spinner():
+            page_content = get_page_content(url)
     
