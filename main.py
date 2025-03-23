@@ -9,7 +9,9 @@ def test(url):
     page = browser.new_page()
     page.goto(url)
 
-    page.screenshot(path='sample.png')
+    x = page.screenshot(path='sample.png')
+
+    st.image(x)
 
 
 url = st.text_input('Enter URL')
