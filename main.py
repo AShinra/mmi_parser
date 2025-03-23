@@ -49,10 +49,10 @@ def get_links(url):
             # Extract all anchor (<a>) tag links
             page.wait_for_function("document.title === 'BusinessMirror | BusinessMirror'")
             # page.wait_for_selector("a", state="visible", timeout=5000)
-            links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
+            # links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
 
             browser.close()
-        return links
+        return page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
     except Exception as e:
         return [f"Error: {e}"]
 
