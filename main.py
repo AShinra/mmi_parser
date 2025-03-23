@@ -11,8 +11,7 @@ def get_page_content(url):
 
     return page.content()
 
-
-if __name__ == '__main__':
+def main():
     url = st.text_input('Enter URL')
     button_process = st.button('Process Link')
 
@@ -22,4 +21,8 @@ if __name__ == '__main__':
                 page_content = get_page_content(url)
         else:
             pass
+
+
+if __name__ == '__main__':
+    main()
         
