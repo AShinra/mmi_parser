@@ -13,6 +13,11 @@ def get_page_content(url):
     page = browser.new_page()
     page.goto(url)
 
+    links = page.get_attribute('a').all()
+    for link in links:
+        st.write(link)
+
+
     x = page.screenshot(path='sample.png')
     st.image(x)
 
@@ -26,8 +31,7 @@ def main():
         if url:
             with st.spinner('Running App'):
                 page_content = get_page_content(url)
-                with st.expander('Test'):
-                    st.write(page_content[:5000])
+                
 
 if __name__ == '__main__':
     main()
