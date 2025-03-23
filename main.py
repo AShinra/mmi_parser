@@ -47,7 +47,8 @@ def get_links(url):
             st.write(page.content())
             
             # Extract all anchor (<a>) tag links
-            page.wait_for_selector("a", state="visible", timeout=5000)
+            page.wait_for_function("document.title === 'BusinessMirror | BusinessMirror'")
+            # page.wait_for_selector("a", state="visible", timeout=5000)
             links = page.eval_on_selector_all("a", "elements => elements.map(e => e.href)")
 
             browser.close()
