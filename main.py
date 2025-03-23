@@ -4,17 +4,16 @@ import streamlit as st
 def test(url):
     pw = sync_playwright().start()
 
-    browser = pw.chromium.launch(timeout=100000)
+    browser = pw.chromium.launch()
 
     page = browser.new_page()
     page.goto(url)
 
-    x = page.screenshot(path='sample.png')
-
-    st.image(x)
+    return page.content()
 
 
 url = st.text_input('Enter URL')
 
 if url:
-    test(url)
+    x = test(url)
+    st.write(x)
