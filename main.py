@@ -4,7 +4,7 @@ import streamlit as st
 def test(url):
     pw = sync_playwright().start()
 
-    browser = pw.chromium.launch()
+    browser = pw.chromium.launch(timeout=100000)
 
     page = browser.new_page()
     page.goto(url)
