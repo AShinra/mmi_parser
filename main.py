@@ -19,9 +19,7 @@ if __name__ == '__main__':
     # if selected_publication == 'Daily Tribune':
     #     dt_fetcher()
 
-    [st_date, en_date] = ui.date_picker('DATE RANGE', mode='range', key='my_range', default_value=None)
-
-    st.write(st_date)
+    my_range = ui.date_picker('DATE RANGE', mode='range', key='my_range', default_value=None)
 
     pub_name = st.selectbox(
         label='Publication',
@@ -32,7 +30,7 @@ if __name__ == '__main__':
 
     if btn_process:
         if pub_name == 'Daily Tribune':
-            dt_fetcher()
+            dt_fetcher(my_range)
 
 
 

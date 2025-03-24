@@ -8,7 +8,12 @@ import re
 # Ensure Playwright browsers are installed
 os.system("playwright install chromium")
 
-def dt_fetcher():
+def dt_fetcher(my_range):
+
+    st_month = my_range[0].split('/')
+    st.write(st_month)
+    st_day = my_range[0]
+    st_year = my_range[0]
 
     # get section links from json file
     with open('fetchers/sections_daily_tribune.json') as json_file:
