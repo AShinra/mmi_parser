@@ -15,7 +15,7 @@ def get_page_content(url):
 
     links = page.query_selector('#footer-menu').query_selector_all('a')
     for link in links:
-        st.write(link)
+        st.write(link.query_selector('href'))
 
 
     x = page.screenshot(path='sample.png')
