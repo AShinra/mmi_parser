@@ -42,7 +42,7 @@ def dt_fetcher():
             links_container = page.wait_for_selector('div#container')
             links = links_container.query_selector_all('a')
             for link in links:
-                st.write(link)
+                st.write(link.get_attribute('href'))
             # for link in links:
             #     if link != None:
             #         st.write(link)
