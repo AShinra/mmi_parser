@@ -23,14 +23,13 @@ def dt_fetcher():
     # go to the sections
     for pub, sections in secs.items():
         st.write(sections)
-        # for section in sections:
-        #     st.write(section)
-        #     page.goto(section)
+        for section in sections:
+            page.goto(section)
 
-        #     links_container = page.wait_for_selector('div#container')
-        #     links = links_container.query_selector_all('a')
-        #     for link in links:
-        #         st.write(link.get_attribute('href'))
+            links_container = page.wait_for_selector('div#container')
+            links = links_container.query_selector_all('a')
+            for link in links:
+                st.write(link.get_attribute('href'))
         
 
     # menu = page.wait_for_selector('#footer-menu')
