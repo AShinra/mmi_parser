@@ -23,6 +23,10 @@ def dt_fetcher():
     # go to the sections
     for pub, sections in secs.items():
         st.write(sections)
+
+        btn_load_more = page.wait_for_selector('div[data-test-id="load-more"]')
+        btn_load_more.click()
+
         for section in sections:
             page.goto(section)
 
