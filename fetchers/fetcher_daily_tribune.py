@@ -41,16 +41,16 @@ def dt_fetcher():
             
             links_container = page.wait_for_selector('div#container')
             links = links_container.query_selector_all('a')
-            for link in links:
-                st.write(link.get_attribute('href'))
-            # for link in links:
-            #     if link != None:
-            #         st.write(link)
-            #         if re.search(r'tribune.net.ph/\d{4}/\d+/\d+/', link):
-            #             _links.append(link.get_attribute('href'))
             
-            # _links = list(dict.fromkeys(_links))
-            # st.write(_links)
+            for link in links:
+                if link != None:
+                    x = link.get_attribute('href')
+                    st.write(x)
+                    if re.search('tribune.net.ph/\d{4}/\d+/\d+/', x):
+                        _links.append(link.get_attribute('href'))
+            
+            _links = list(dict.fromkeys(_links))
+            st.write(_links)
         
 
     # menu = page.wait_for_selector('#footer-menu')
