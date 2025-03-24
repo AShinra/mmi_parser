@@ -47,7 +47,10 @@ def dt_fetcher(my_range):
             
             for link in links:
                 if link != None:
-                    if re.search(f'tribune.net.ph/{st_year}/{st_month}/{st_day}/', link.get_attribute('href')):
+                    _link = link.get_attribute('href')
+                    link_date = _link.split('/')[3]
+                    st.write(link_date)
+                    if re.search('tribune.net.ph/\d{4}/\d+/\d+/', link.get_attribute('href')):
                         _links.append(link.get_attribute('href'))
             
             _links = list(dict.fromkeys(_links))
