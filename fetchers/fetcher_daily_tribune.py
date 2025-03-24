@@ -46,6 +46,8 @@ def dt_fetcher():
                     st.write(link)
                     if re.search(r'tribune.net.ph/\d{4}/\d+/\d+/', link):
                         _links.append(link.get_attribute('href'))
+                    else:
+                        pass
             
             _links = list(dict.fromkeys(_links))
             st.write(_links)
