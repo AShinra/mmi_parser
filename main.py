@@ -5,7 +5,7 @@ import streamlit as st
 # Ensure Playwright browsers are installed
 os.system("playwright install chromium")
 
-def get_page_content(url):
+def get_section_links(url):
     pw = sync_playwright().start()
 
     browser = pw.chromium.launch()
@@ -32,7 +32,7 @@ def main():
     if button_process:
         if url:
             with st.spinner('Running App'):
-                page_content = get_page_content(url)
+                page_content = get_section_links(url)
                 
 
 if __name__ == '__main__':
