@@ -23,7 +23,7 @@ def dt_fetcher():
     # go to the sections
     for pub, sections in secs.items():
         st.write(sections)
-        for section in sections:
+        for section in sections[:1]:
             page.goto(section)
 
             try:
