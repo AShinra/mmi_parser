@@ -22,6 +22,7 @@ def dt_fetcher():
     
     # go to the sections
     for section in sections:
+        st.write(section)
         page.goto(section)
 
         links_container = page.wait_for_selector('div#container')
