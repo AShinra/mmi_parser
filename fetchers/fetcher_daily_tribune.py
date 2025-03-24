@@ -15,7 +15,7 @@ def dt_fetcher():
     pw = sync_playwright().start()
 
     # create a browser
-    browser = pw.chromium.launch(headless=False, timeout=10000)
+    browser = pw.chromium.launch()
 
     # create a new page in the browser
     page = browser.new_page()
