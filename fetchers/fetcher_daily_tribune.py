@@ -10,7 +10,7 @@ os.system("playwright install chromium")
 
 def dt_fetcher(my_range):
 
-    st_month = my_range[0].split()
+    st_month = my_range[0].split('-')[0]
     st.write(st_month)
     st_day = my_range[0]
     st_year = my_range[0]
