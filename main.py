@@ -10,14 +10,25 @@ os.system("playwright install chromium")
 
 if __name__ == '__main__':
 
-    with st.sidebar:
-        selected_publication = option_menu(
-            menu_title='Publications',
-            options=['Daily Tribune']
-        )
+    # with st.sidebar:
+    #     selected_publication = option_menu(
+    #         menu_title='Publications',
+    #         options=['Daily Tribune']
+    #     )
 
-    if selected_publication == 'Daily Tribune':
-        dt_fetcher()
+    # if selected_publication == 'Daily Tribune':
+    #     dt_fetcher()
+
+    pub_name = st.selectbox(
+        label='Publication',
+        options=['Daily Tribune']
+        )
+    
+    btn_process = st.button(label='Fetch URLS')
+
+    if btn_process:
+        if pub_name == 'Daily Tribune':
+            dt_fetcher()
 
 
 
