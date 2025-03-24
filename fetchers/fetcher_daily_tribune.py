@@ -25,9 +25,14 @@ def dt_fetcher():
         st.write(sections)
         for section in sections:
             page.goto(section)
-            
-            btn_load_more = page.wait_for_selector('div[data-test-id="load-more"]')
-            btn_load_more.click()
+
+            try:
+                btn_load_more = page.wait_for_selector('div[data-test-id="load-more"]')
+            # btn_load_more.click()
+            except:
+                pass
+            else:
+                st.write('FOUND')
 
             links_container = page.wait_for_selector('div#container')
             links = links_container.query_selector_all('a')
