@@ -15,6 +15,8 @@ def dt_fetcher(my_range):
     st_date = my_range[0]
     en_date = my_range[-1]
 
+    st.write(type(st_date))
+
     # get section links from json file
     with open('fetchers/sections_daily_tribune.json') as json_file:
         secs = json.load(json_file)
