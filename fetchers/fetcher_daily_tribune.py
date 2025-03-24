@@ -61,7 +61,7 @@ def dt_fetcher(my_range):
                         link_month = int(_link.split('/')[4])
                         link_day = int(_link.split('/')[5])
                         link_date = datetime.datetime(link_year, link_month, link_day)
-                        link_title = link.inner_text()
+                        link_title = link.text_content()
                         if link_date >= st_date and link_date <= en_date:
                             if _link not in _links:
                                 _links.append(_link)
