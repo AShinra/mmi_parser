@@ -40,7 +40,7 @@ def main():
 
 if __name__ == '__main__':
 
-    with st.sidebar():
+    with st.sidebar:
         selected_publication = option_menu(
             menu_title='Publications',
             options=['Daily Tribune']
