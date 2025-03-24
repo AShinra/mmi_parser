@@ -9,18 +9,25 @@ os.system("playwright install chromium")
 def dt_fetcher():
 
     # get section links from json file
-    with open('fetchers/websites.json') as json_file:
-        data = json.load(json_file)
-    
-    st.write(data)
-
-
+    with open('fetchers/sections_daily_tribune.json') as json_file:
+        sections = json.load(json_file)
+        
     pw = sync_playwright().start()
 
+    # create a browser
     browser = pw.chromium.launch()
 
+    # create a new page in the browser
     page = browser.new_page()
-    # page.goto(url)
+    
+    # go to the sections
+    for section in sections:
+        page.goto(section)
+
+        links = page.query_selector_all('a')
+        for link in links:
+            st.write(link.get_attribute('href'))
+        
 
     # menu = page.wait_for_selector('#footer-menu')
     # links = menu.query_selector_all('a')
