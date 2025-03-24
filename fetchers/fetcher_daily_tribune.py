@@ -11,9 +11,9 @@ os.system("playwright install chromium")
 def dt_fetcher(my_range):
 
     st_year = my_range[0].split('-')[0]
-    st.write(my_range)
-    st_day = my_range[0]
-    st_year = my_range[0]
+    st_month = my_range[0].split('-')[1]
+    st_day = my_range[0].split('-')[-1]
+
 
     # get section links from json file
     with open('fetchers/sections_daily_tribune.json') as json_file:
@@ -47,7 +47,7 @@ def dt_fetcher(my_range):
             
             for link in links:
                 if link != None:
-                    if re.search('tribune.net.ph/\d{4}/\d+/\d+/', link.get_attribute('href')):
+                    if re.search(f'tribune.net.ph/{st_year}/{st_month}/{st_day}/', link.get_attribute('href')):
                         _links.append(link.get_attribute('href'))
             
             _links = list(dict.fromkeys(_links))
