@@ -24,7 +24,8 @@ def dt_fetcher():
     for section in sections:
         page.goto(section)
 
-        links = page.query_selector_all('a')
+        links_container = page.wait_for_selector('div#container')
+        links = links_container.query_selector_all('a')
         for link in links:
             st.write(link.get_attribute('href'))
         
