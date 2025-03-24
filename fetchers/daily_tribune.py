@@ -1,12 +1,20 @@
 import os
 from playwright.sync_api import sync_playwright
 import streamlit as st
-from streamlit_option_menu import option_menu
+import json
 
 # Ensure Playwright browsers are installed
 os.system("playwright install chromium")
 
-def dt_fetcher(url):
+def dt_fetcher():
+
+    # get section links from json file
+    with open('fetchers/wensites.json') as json_file:
+        data = json.load(json_file)
+    
+    st.write(data)
+
+
     pw = sync_playwright().start()
 
     browser = pw.chromium.launch()
