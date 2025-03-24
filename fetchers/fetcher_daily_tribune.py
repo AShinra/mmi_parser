@@ -3,6 +3,7 @@ from playwright.sync_api import sync_playwright
 import streamlit as st
 import json
 import time
+import re
 
 # Ensure Playwright browsers are installed
 os.system("playwright install chromium")
@@ -41,7 +42,8 @@ def dt_fetcher():
             links_container = page.wait_for_selector('div#container')
             links = links_container.query_selector_all('a')
             for link in links:
-                _links.append(link.get_attribute('href'))
+                if re.search('tribune.net.ph/\d{4}/\d+/\d+/', link):
+                    _links.append(link.get_attribute('href'))
             
             _links = list(dict.fromkeys(_links))
             st.write(_links)
