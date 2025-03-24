@@ -5,6 +5,7 @@ import json
 import time
 import re
 import datetime
+import pandas as pd
 
 # Ensure Playwright browsers are installed
 os.system("playwright install chromium")
@@ -32,9 +33,12 @@ def dt_fetcher(my_range):
     page = browser.new_page()
     
     # go to the sections
+    _links = []
+    _date = []
+    _title = []
+    link_dict = {}
     for pub, sections in secs.items():
         for section in sections:
-            _links = []
             page.goto(section)
             page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(2)
@@ -57,11 +61,19 @@ def dt_fetcher(my_range):
                         link_month = int(_link.split('/')[4])
                         link_day = int(_link.split('/')[5])
                         link_date = datetime.datetime(link_year, link_month, link_day)
+                        link_title = link.text_content()
                         if link_date >= st_date and link_date <= en_date:
-                            _links.append(link.get_attribute('href'))
+                            if _link not in _links:
+                                _links.append(_link)
+                                _date.append(link_date)
+                                _title.append(link_title)
+                                link_dict['DATE'] = _date
+                                link_dict['TITLE'] = _title
+                                link_dict['URL'] = _links
             
-            _links = list(dict.fromkeys(_links))
-            st.write(_links)
+            
+    df = pd.DataFrame(link_dict)
+    st.dataframe(df)
         
 
     # menu = page.wait_for_selector('#footer-menu')
