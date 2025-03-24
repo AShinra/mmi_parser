@@ -25,6 +25,7 @@ def dt_fetcher():
         st.write(sections)
         for section in sections[:1]:
             page.goto(section)
+            page.wait_for_timeout(5000)
 
             try:
                 btn_load_more = page.wait_for_selector('div[data-test-id="load-more"]')
