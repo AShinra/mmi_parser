@@ -21,6 +21,8 @@ if __name__ == '__main__':
 
     my_range = ui.date_picker('DATE RANGE', mode='range', key='my_range', default_value=None)
 
+    st.write(my_range)
+
     pub_name = st.selectbox(
         label='Publication',
         options=['Daily Tribune']
