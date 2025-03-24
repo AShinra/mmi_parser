@@ -7,11 +7,6 @@ from streamlit_datetime_picker import date_time_picker, date_range_picker
 
 # Ensure Playwright browsers are installed
 os.system("playwright install chromium")
-               
-dt = date_time_picker('Date Time Input')
-st.write(f"DateTimeInput: {dt}")
-(start, end) = date_range_picker()
-st.write(f"DateRangeInput: From {start} to {end}")
 
 if __name__ == '__main__':
 
