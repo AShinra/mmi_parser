@@ -31,8 +31,12 @@ def dt_fetcher():
             page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(2)
 
-            btn_load_more = page.wait_for_selector('div.arr--button')
-            btn_load_more.click()
+            try:
+                btn_load_more = page.wait_for_selector('div.arr--button')
+            except:
+                pass
+            else:
+                btn_load_more.click()
             
             links_container = page.wait_for_selector('div#container')
             links = links_container.query_selector_all('a')
