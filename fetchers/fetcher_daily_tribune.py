@@ -28,7 +28,7 @@ def dt_fetcher():
             page.wait_for_timeout(5000)
 
             try:
-                btn_load_more = page.wait_for_selector('div[data-test-id="load-more"]')
+                btn_load_more = page.wait_for_selector('div.arr--button')
             # btn_load_more.click()
             except:
                 pass
