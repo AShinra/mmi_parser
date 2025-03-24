@@ -4,16 +4,16 @@ import streamlit as st
 import json
 import time
 import re
+import datetime
 
 # Ensure Playwright browsers are installed
 os.system("playwright install chromium")
 
 def dt_fetcher(my_range):
 
-    st_year = my_range[0].split('-')[0]
-    st_month = my_range[0].split('-')[1]
-    st_day = my_range[0].split('-')[-1]
-
+    # get the start and end dates
+    st_date = my_range[0]
+    en_date = my_range[-1]
 
     # get section links from json file
     with open('fetchers/sections_daily_tribune.json') as json_file:
@@ -48,10 +48,13 @@ def dt_fetcher(my_range):
             for link in links:
                 if link != None:
                     _link = link.get_attribute('href')
-                    link_date = _link.split('/')[3]
-                    st.write(link_date)
-                    if re.search('tribune.net.ph/\d{4}/\d+/\d+/', link.get_attribute('href')):
-                        _links.append(link.get_attribute('href'))
+                    if re.search('tribune.net.ph/\d{4}/\d+/\d+/', _link):
+                        link_year = _link.split('/')[3]
+                        link_month = _link.split('/')[4]
+                        link_day = _link.split('/')[5]
+                        link_date = datetime.datetime(link_year, link_month, link_day)
+                        if link_date >= st_date and link_date <= en_date:
+                            _links.append(link.get_attribute('href'))
             
             _links = list(dict.fromkeys(_links))
             st.write(_links)
