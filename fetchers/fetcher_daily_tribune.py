@@ -67,6 +67,7 @@ def dt_fetcher(my_range):
                                 _links.append(_link)
                                 _date.append(link_date)
                                 _title.append(link_title)
+                                st.write(f'---{link_title}---')
                                 link_dict['DATE'] = _date
                                 link_dict['TITLE'] = _title
                                 link_dict['URL'] = _links
