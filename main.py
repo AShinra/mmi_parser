@@ -15,6 +15,7 @@ def get_section_links(url):
 
     menu = page.wait_for_selector('#footer-menu')
     links = menu.query_selector_all('a')
+    st.write(type(links))
     for link in links:
         st.write(link.get_attribute('href'))
 
