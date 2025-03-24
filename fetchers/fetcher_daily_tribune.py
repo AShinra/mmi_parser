@@ -26,6 +26,7 @@ def dt_fetcher():
         st.write(sections)
         for section in sections:
             _links = []
+            st.write(section)
             page.goto(section)
             page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(2)
