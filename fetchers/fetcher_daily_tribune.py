@@ -49,9 +49,9 @@ def dt_fetcher(my_range):
                 if link != None:
                     _link = link.get_attribute('href')
                     if re.search('tribune.net.ph/\d{4}/\d+/\d+/', _link):
-                        link_year = _link.split('/')[3]
-                        link_month = _link.split('/')[4]
-                        link_day = _link.split('/')[5]
+                        link_year = int(_link.split('/')[3])
+                        link_month = int(_link.split('/')[4])
+                        link_day = int(_link.split('/')[5])
                         link_date = datetime.datetime(link_year, link_month, link_day)
                         if link_date >= st_date and link_date <= en_date:
                             _links.append(link.get_attribute('href'))
