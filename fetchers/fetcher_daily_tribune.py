@@ -24,10 +24,8 @@ def dt_fetcher():
     
     # go to the sections
     for pub, sections in secs.items():
-        st.write(sections)
         for section in sections:
             _links = []
-            st.write(section)
             page.goto(section)
             page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(2)
