@@ -30,7 +30,8 @@ if __name__ == '__main__':
 
     if btn_process:
         if pub_name == 'Daily Tribune':
-            dt_fetcher(my_range)
+            with st.spinner('Fetching Links'):
+                dt_fetcher(my_range)
 
 
 
