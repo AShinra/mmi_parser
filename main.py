@@ -13,7 +13,7 @@ def get_page_content(url):
     page = browser.new_page()
     page.goto(url)
 
-    links = page.query_selector('#footer-menu').query_selector_all('a')
+    links = page.query_selector('#footer-menu').eval_on_selector_all("a['href']")
     for link in links:
         st.write(link.query_selector('href'))
 
