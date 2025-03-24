@@ -14,9 +14,9 @@ def get_page_content(url):
     page.goto(url)
 
     menu = page.wait_for_selector('#footer-menu')
-    links = menu.query_selector_all('a["href"]')
+    links = menu.query_selector_all('a')
     for link in links:
-        st.write(link)
+        st.write(link.get_attribute('href'))
 
 
 
