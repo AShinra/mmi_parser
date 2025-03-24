@@ -35,10 +35,10 @@ def dt_fetcher():
             else:
                 st.write('FOUND')
 
-            links_container = page.wait_for_selector('div#container')
-            links = links_container.query_selector_all('a')
-            for link in links:
-                st.write(link.get_attribute('href'))
+            # links_container = page.wait_for_selector('div#container')
+            # links = links_container.query_selector_all('a')
+            # for link in links:
+            #     st.write(link.get_attribute('href'))
         
 
     # menu = page.wait_for_selector('#footer-menu')
