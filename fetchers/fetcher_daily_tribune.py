@@ -13,15 +13,11 @@ def dt_fetcher(my_range):
 
     # get the start and end dates
     st_date = my_range[0].split('-')
-    st.write(st_date)
     st_date = datetime.datetime(int(st_date[0]), int(st_date[1]), int(st_date[-1]))
-    st.write(st_date)
 
     en_date = my_range[-1].split('-')
-
-
-
-    
+    en_date = datetime.datetime(int(en_date[0]), int(en_date[1]), int(en_date[-1]))
+  
 
     # get section links from json file
     with open('fetchers/sections_daily_tribune.json') as json_file:
