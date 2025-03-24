@@ -2,6 +2,7 @@ import os
 from playwright.sync_api import sync_playwright
 import streamlit as st
 import json
+import time
 
 # Ensure Playwright browsers are installed
 os.system("playwright install chromium")
@@ -25,7 +26,8 @@ def dt_fetcher():
         st.write(sections)
         for section in sections[:1]:
             page.goto(section)
-            page.wait_for_timeout(5000)
+            page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(2)
 
             try:
                 btn_load_more = page.wait_for_selector('div.arr--button')
