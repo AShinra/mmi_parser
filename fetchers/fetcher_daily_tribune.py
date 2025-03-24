@@ -12,10 +12,16 @@ os.system("playwright install chromium")
 def dt_fetcher(my_range):
 
     # get the start and end dates
-    st_date = my_range[0]
-    en_date = my_range[-1]
+    st_date = my_range[0].split('-')
+    st.write(st_date)
+    st_date = datetime.datetime(st_date[0], st_date[1], st_date[-1])
+    st.write(st_date)
 
-    st.write(type(st_date))
+    en_date = my_range[-1].split('-')
+
+
+
+    
 
     # get section links from json file
     with open('fetchers/sections_daily_tribune.json') as json_file:
