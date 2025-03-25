@@ -51,7 +51,6 @@ def dt_fetcher(my_range):
                     pass
                 else:
                     btn_load_more.click()
-                    time.sleep(2)
                 
                 st.write(i)
             
