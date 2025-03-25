@@ -50,7 +50,10 @@ def dt_fetcher(my_range):
                 except:
                     pass
                 else:
-                    btn_load_more.click()
+                    try:
+                        btn_load_more.click()
+                    except:
+                        pass
             
             links_container = page.wait_for_selector('div#container')
             links = links_container.query_selector_all('a')
