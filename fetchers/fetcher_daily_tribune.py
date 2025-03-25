@@ -40,15 +40,17 @@ def dt_fetcher(my_range):
     for pub, sections in secs.items():
         for section in sections:
             page.goto(section)
-            page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(2)
 
-            try:
-                btn_load_more = page.wait_for_selector('div.arr--button')
-            except:
-                pass
-            else:
-                btn_load_more.click()
+            for i in range(1, 10, 1):
+                page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
+                time.sleep(2)
+
+                try:
+                    btn_load_more = page.wait_for_selector('div.arr--button')
+                except:
+                    pass
+                else:
+                    btn_load_more.click()
             
             links_container = page.wait_for_selector('div#container')
             links = links_container.query_selector_all('a')
@@ -77,15 +79,4 @@ def dt_fetcher(my_range):
     st.dataframe(df)
         
 
-    # menu = page.wait_for_selector('#footer-menu')
-    # links = menu.query_selector_all('a')
-    # st.write(type(links))
-    # for link in links:
-    #     st.write(link.get_attribute('href'))
-
-
-
-    # x = page.screenshot(path='sample.png')
-    # st.image(x)
-
-    # return page.content()
+    
