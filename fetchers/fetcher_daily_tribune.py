@@ -41,16 +41,17 @@ def dt_fetcher(my_range):
         for section in sections:
             page.goto(section)
 
-            for i in range(0, 5, 1):
+            for i in range(0, 10, 1):
                 page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
                 time.sleep(2)
 
                 try:
-                    btn_load_more = page.wait_for_selector('div.arr--button', timeout=10000)
+                    btn_load_more = page.wait_for_selector('div.arr--button')
                 except:
                     pass
                 else:
                     btn_load_more.click()
+                    time.sleep(2)
                 
                 st.write(i)
             
