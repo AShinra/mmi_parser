@@ -41,7 +41,7 @@ def dt_fetcher(my_range):
         for section in sections:
             page.goto(section)
 
-            for i in range(1, 10, 1):
+            for i in range(1, 5, 1):
                 page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
                 time.sleep(2)
 
