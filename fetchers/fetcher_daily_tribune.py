@@ -46,7 +46,7 @@ def dt_fetcher(my_range):
                 time.sleep(2)
 
                 try:
-                    btn_load_more = page.wait_for_selector('div.arr--button')
+                    btn_load_more = page.wait_for_selector('div.arr--button', timeout=10000)
                 except:
                     pass
                 else:
